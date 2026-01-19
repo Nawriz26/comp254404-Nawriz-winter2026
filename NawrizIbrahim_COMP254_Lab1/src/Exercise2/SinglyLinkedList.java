@@ -23,6 +23,9 @@ package Exercise2;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import java.sql.PseudoColumnUsage;
+import java.util.NoSuchElementException;
+
 /**
  * A basic singly linked list implementation.
  *
@@ -32,6 +35,7 @@ package Exercise2;
  */
 public class SinglyLinkedList<E> implements Cloneable {
     //---------------- nested Node class ----------------
+
     /**
      * Node of a singly linked list, which stores a reference to its
      * element and to the subsequent node in the list (or null if this
@@ -39,17 +43,21 @@ public class SinglyLinkedList<E> implements Cloneable {
      */
     private static class Node<E> {
 
-        /** The element stored at this node */
+        /**
+         * The element stored at this node
+         */
         private E element;            // reference to the element stored at this node
 
-        /** A reference to the subsequent node in the list */
+        /**
+         * A reference to the subsequent node in the list
+         */
         private Node<E> next;         // reference to the subsequent node in the list
 
         /**
          * Creates a node with the given element and next node.
          *
-         * @param e  the element to be stored
-         * @param n  reference to a node that should follow the new node
+         * @param e the element to be stored
+         * @param n reference to a node that should follow the new node
          */
         public Node(E e, Node<E> n) {
             element = e;
@@ -57,55 +65,83 @@ public class SinglyLinkedList<E> implements Cloneable {
         }
 
         // Accessor methods
+
         /**
          * Returns the element stored at the node.
+         *
          * @return the element stored at the node
          */
-        public E getElement() { return element; }
+        public E getElement() {
+            return element;
+        }
 
         /**
          * Returns the node that follows this one (or null if no such node).
+         *
          * @return the following node
          */
-        public Node<E> getNext() { return next; }
+        public Node<E> getNext() {
+            return next;
+        }
 
         // Modifier methods
+
         /**
          * Sets the node's next reference to point to Node n.
-         * @param n    the node that should follow this one
+         *
+         * @param n the node that should follow this one
          */
-        public void setNext(Node<E> n) { next = n; }
+        public void setNext(Node<E> n) {
+            next = n;
+        }
 
     } //----------- end of nested Node class -----------
 
     // instance variables of the SinglyLinkedList
-    /** The head node of the list */
+    /**
+     * The head node of the list
+     */
     private Node<E> head = null;               // head node of the list (or null if empty)
 
-    /** The last node of the list */
+    /**
+     * The last node of the list
+     */
     private Node<E> tail = null;               // last node of the list (or null if empty)
 
-    /** Number of nodes in the list */
+    /**
+     * Number of nodes in the list
+     */
     private int size = 0;                      // number of nodes in the list
 
-    /** Constructs an initially empty list. */
-    public SinglyLinkedList() { }              // constructs an initially empty list
+    /**
+     * Constructs an initially empty list.
+     */
+    public SinglyLinkedList() {
+    }              // constructs an initially empty list
 
     // access methods
+
     /**
      * Returns the number of elements in the linked list.
+     *
      * @return number of elements in the linked list
      */
-    public int size() { return size; }
+    public int size() {
+        return size;
+    }
 
     /**
      * Tests whether the linked list is empty.
+     *
      * @return true if the linked list is empty, false otherwise
      */
-    public boolean isEmpty() { return size == 0; }
+    public boolean isEmpty() {
+        return size == 0;
+    }
 
     /**
      * Returns (but does not remove) the first element of the list
+     *
      * @return element at the front of the list (or null if empty)
      */
     public E first() {             // returns (but does not remove) the first element
@@ -115,6 +151,7 @@ public class SinglyLinkedList<E> implements Cloneable {
 
     /**
      * Returns (but does not remove) the last element of the list.
+     *
      * @return element at the end of the list (or null if empty)
      */
     public E last() {              // returns (but does not remove) the last element
@@ -123,9 +160,11 @@ public class SinglyLinkedList<E> implements Cloneable {
     }
 
     // update methods
+
     /**
      * Adds an element to the front of the list.
-     * @param e  the new element to add
+     *
+     * @param e the new element to add
      */
     public void addFirst(E e) {                // adds element e to the front of the list
         head = new Node<>(e, head);              // create and link a new node
@@ -136,7 +175,8 @@ public class SinglyLinkedList<E> implements Cloneable {
 
     /**
      * Adds an element to the end of the list.
-     * @param e  the new element to add
+     *
+     * @param e the new element to add
      */
     public void addLast(E e) {                 // adds element e to the end of the list
         Node<E> newest = new Node<>(e, null);    // node will eventually be the tail
@@ -150,6 +190,7 @@ public class SinglyLinkedList<E> implements Cloneable {
 
     /**
      * Removes and returns the first element of the list.
+     *
      * @return the removed element (or null if empty)
      */
     public E removeFirst() {                   // removes and returns the first element
@@ -160,6 +201,71 @@ public class SinglyLinkedList<E> implements Cloneable {
         if (size == 0)
             tail = null;                           // special case as list is now empty
         return answer;
+    }
+
+    /**
+     * Exercise 2 requirement:
+     * Swap two nodes (not just their contents) in this singly linked list, given references only to those nodes.
+     *
+     * Rules handled:
+     * - if first node == second node: do nothing
+     * - if either node is null: do nothing
+     * - if either node is not present in this list: throws NoSuchElementException
+     *
+     * @param first 1st node reference
+     * @param second 2nd node reference
+     */
+    public void swapNodes(Node<E> first, Node<E> second) {
+        if (first == second) return;
+        if (first == null || second == null) return;
+        if (head == null) return;
+
+        // Now we should find predecessors of first & second node which is required for relinking in a singly LL
+        Node<E> prevFirst = findPredecessor(first);
+        Node<E> prevSecond = findPredecessor(second);
+
+        if (first.getNext() == second) {
+            linkPredecessorToNewNode(prevFirst, second);
+            first.setNext(second.getNext());
+            second.setNext(first);
+        }else if (second.getNext() == first) {
+            linkPredecessorToNewNode(prevSecond, first);
+            second.setNext(first.getNext());
+            first.setNext(second);
+        }else  {
+            Node<E> temp = first.getNext();
+            first.setNext(second.getNext());
+            second.setNext(temp);
+
+            linkPredecessorToNewNode(prevFirst, second);
+            linkPredecessorToNewNode(prevSecond, first);
+        }
+
+        if (tail == first) {
+            tail = second;
+        }else if (tail == second) {
+            tail = first;
+        }
+    }
+
+    // This method is called to return the predecessor of target within this list, or null if target is head
+    // It throws NoSuchElementException if target is not found
+    private Node<E> findPredecessor(Node<E> target) {
+        if (head == target) return null;
+        Node<E> walk = head;
+        while (walk != null && walk.getNext() != target) {
+            walk = walk.getNext();
+        }
+        if (walk == null) throw new NoSuchElementException("Both nodes MUST belong to this list");
+        return walk;
+    }
+
+    // This method is called to update the predecessor link (or head) so it points to newNode
+    private void linkPredecessorToNewNode(Node<E> predesssor, Node<E> newNode) {
+        if (predesssor == null) head = newNode;
+        else {
+            predesssor.setNext(newNode);
+        }
     }
 
     @SuppressWarnings({"unchecked"})
@@ -224,33 +330,49 @@ public class SinglyLinkedList<E> implements Cloneable {
     //main method
     public static void main(String[] args)
     {
-
         SinglyLinkedList<String> list = new SinglyLinkedList<String>();
-        list.addFirst("MSP");
-        list.addLast("ATL");
-        list.addLast("BOS");
-        //
-        list.addFirst("LAX");
-        System.out.println(list + "\n");
-        //
+        list.addLast("Toronto");
+        list.addLast("Waterloo");
+        list.addLast("London");
+        list.addLast("Ottawa");
+        list.addLast("Kitchener");
 
-        SinglyLinkedList<Double> doubleList = new SinglyLinkedList<>();
 
-        // insertions at head and tail
-        doubleList.addFirst(2.2);
-        doubleList.addFirst(1.1);
-        doubleList.addLast(3.3);
-        doubleList.addLast(4.4);
+        System.out.println("Here is the original List " + list + "\n");
 
-        System.out.println("After addFirst/addLast: " + doubleList);
+        // Capture node references by traversing the list
+        Node<String> nodeOne = null;
+        Node<String> nodeTwo = null;
+        Node<String> walk = list.head;
+        while (walk != null) {
+            if ("Waterloo".equals(walk.getElement())) {
+                nodeOne = walk;
+            }
+            if ("Ottawa".equals(walk.getElement())) {
+                nodeTwo = walk;
+            }
+            walk = walk.getNext();
+        }
 
-        // removals at head
-        System.out.println("removeFirst() = " + doubleList.removeFirst());
-        System.out.println("After 1st removeFirst: " + doubleList);
+        // Swap Waterloo and Ottawa (non-adjacent)
+        list.swapNodes(nodeOne, nodeTwo);
+        System.out.println("After swapping Waterloo and London: " + list + "\n");
 
-        System.out.println("removeFirst() = " + doubleList.removeFirst());
-        System.out.println("After 2nd removeFirst: " + doubleList);
+        // Swap head and tail (Toronto and Kitchener)
+        Node<String> nodeToronto = list.head;
+        Node<String> nodeKitchener = list.tail;
+        list.swapNodes(nodeToronto, nodeKitchener);
+        System.out.println("After swapping Head and Tail: " + list + "\n");
+
+        // Swap adjacent nodes
+        Node<String> walk1 = list.head;
+        Node<String> walk2 = walk1.getNext();
+        list.swapNodes(walk1, walk2);
+        System.out.println("After swapping adjacent (walk1, walk2): " + list + "\n");
+
+        // Swap a node with itself (No change)
+        list.swapNodes(walk2, walk2);
+        System.out.println("After swapping same node (No change): " + list + "\n");
     }
-
 }
 
