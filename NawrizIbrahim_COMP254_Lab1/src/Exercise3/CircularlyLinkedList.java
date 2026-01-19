@@ -1,3 +1,16 @@
+/*
+
+ ** File:            CircularlyLinkedList.java
+ ** Student:         Nawriz Ibrahim
+ ** Student number:  301161181
+ ** Assignment:      Lab Assignment #1 – Exercise 3 – Using Fundamental Data Structures
+ ** Date:            January 19, 2026
+ ** Description:     This program uses the textbook CircularlyLinkedList implementation and adds a
+ **                  clone() method that performs a deep copy of the circular structure (independent
+ **                  chain of nodes). A main method is included to test that the cloned list remains
+ **                  unchanged after mutating the original list.
+ */
+
 package Exercise3;
 
 /*
