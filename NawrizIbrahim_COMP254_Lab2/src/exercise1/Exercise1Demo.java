@@ -1,3 +1,13 @@
+/*
+
+ ** File:            Exercise1Demo.java
+ ** Student:         Nawriz Ibrahim
+ ** Student number:  301161181
+ ** Assignment:      Lab Assignment #2 – Exercise 1 – Using Algorithm Analysis
+ ** Date:            January 31, 2026
+ ** Description:     This is a Driver program that calls Exercises.example1 --> example5 and prints results
+ */
+
 package exercise1;
 
 import java.util.Arrays;
