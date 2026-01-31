@@ -34,6 +34,8 @@ package exercise1;
 class Exercises {
 
     /** Returns the sum of the integers in given array. */
+
+    /*The big-Oh characterization here Big-Oh is" O(n) because one loop runs 1 time*/
     public static int example1(int[] arr) {
         int n = arr.length, total = 0;
         for (int j=0; j < n; j++)       // loop from 0 to n-1
@@ -41,7 +43,7 @@ class Exercises {
         return total;
     }
 
-    /** Returns the sum of the integers with even index in given array. */
+    /*The big-Oh characterization here Big-Oh is" O(n) because loop increments by 2 so it runs n/2 times*/
     public static int example2(int[] arr) {
         int n = arr.length, total = 0;
         for (int j=0; j < n; j += 2)    // note the increment of 2
@@ -50,6 +52,7 @@ class Exercises {
     }
 
     /** Returns the sum of the prefix sums of given array. */
+    /*The big-Oh characterization here Big-Oh is" O(n^2) because nested [for loop] loops with counts 1+2+3+...+n*/
     public static int example3(int[] arr) {
         int n = arr.length, total = 0;
         for (int j=0; j < n; j++)       // loop from 0 to n-1
@@ -59,6 +62,8 @@ class Exercises {
     }
 
     /** Returns the sum of the prefix sums of given array. */
+    /*The big-Oh characterization here Big-Oh is" O(n) because it is a single loop where prefix and total
+    are O(1) per iteration*/
     public static int example4(int[] arr) {
         int n = arr.length, prefix = 0, total = 0;
         for (int j=0; j < n; j++) {     // loop from 0 to n-1
@@ -69,6 +74,12 @@ class Exercises {
     }
 
     /** Returns the number of times second array stores sum of prefix sums from first. */
+    /*The big-Oh characterization here Big-Oh is" O(n^3) because:
+     - Outer loop i runs n times
+     - first nested loop j runs n times
+     - second nested loop k runs j+1 times
+     So, Total operations approx. n * (1+2+....+n) = n * n(n+a)/2 = O(n^3)
+     */
     public static int example5(int[] first, int[] second) { // assume equal-length arrays
         int n = first.length, count = 0;
         for (int i=0; i < n; i++) {     // loop from 0 to n-1
