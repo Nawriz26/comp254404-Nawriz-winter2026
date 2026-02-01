@@ -21,13 +21,16 @@ public class UniquenessDemo {
     // Create an array will all UNIQUE values (worst-case for unique1: it must compare everything)
     private static int[] uniqueData(int n) {
         int[] a = new int[n];
+
+        // Fill with unique values 0..n-1
         for (int i = 0; i < n; i++) {
             a[i] = i;
         }
+
         // Shuffle so that unique2 does NOT get a potentially "nice" ordering
         for (int i = n - 1; i > 0; i--) {
             int j = RANDOM.nextInt(i + 1);
-            int tmp = a[j];
+            int tmp = a[i];
             a[i] = a[j];
             a[j] = tmp;
         }
