@@ -1,5 +1,17 @@
 package exercise3;
 
+/*
+ ** File:            UniquenessDemo.java
+ ** Student:         Nawriz Ibrahim
+ ** Student number:  301161181
+ ** Assignment:      Lab Assignment #2 – Exercise 3 – Using Algorithm Analysis
+ ** Date:            Feb 1, 2026
+ ** Description:     This is a driver program that performs an experimental analysis for
+ **                  Uniqueness.unique1 and Uniqueness.unique2. It determines the largest
+ **                  input size n such that each algorithm runs in 60 seconds or less,
+ **                  using a probing phase and a binary search phase.
+ */
+
 import java.util.Random;
 
 public class UniquenessDemo {
