@@ -375,8 +375,17 @@ public class SinglyLinkedList<E> implements Cloneable {
         // Swap head and tail (Toronto and Kitchener)
         Node<String> nodeToronto = list.head;
         Node<String> nodeKitchener = list.tail;
+
+//        // // Check Node addresses before Swapping
+//        System.out.println("Before swapping nodeToronto address is: " + nodeToronto + "\n");
+//        System.out.println("Before swapping nodeKitchener address is " + nodeKitchener + "\n");
+
         list.swapNodes(nodeToronto, nodeKitchener);
         System.out.println("After swapping Head and Tail: " + list + "\n");
+
+//        // Check Node addresses after Swapping
+//        System.out.println("After swapping nodeToronto address becomes " + nodeToronto + "\n");
+//        System.out.println("After swapping nodeKitchener address becomes " + nodeKitchener + "\n");
 
         // Swap adjacent nodes
         Node<String> walk1 = list.head;
