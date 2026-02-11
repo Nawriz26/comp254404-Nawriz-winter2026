@@ -15,6 +15,8 @@
 package exercise1;
 
 
+import java.util.Scanner;
+
 /**
  * Driver class for Exercise 1.
  *
@@ -45,14 +47,13 @@ public class RecursiveProductApp {
      *
      * if (n > m) -> swap so that n <= m
      *
-     *
      * Complexity
      * Time:  O(min(m, n))  because we recurse once per decrement of the smaller number.
      * Space: O(min(m, n))  due to the recursion call stack.
      *
-     * @param m first positive integer multiplicand (expected > 0)
-     * @param n second positive integer multiplier (expected > 0)
-     * @return the product m * n computed recursively without using '*'
+     * @param m     first positive integer multiplicand (expected > 0)
+     * @param n     second positive integer multiplier (expected > 0)
+     * @return      the product m * n computed recursively without using '*'
      */
     public static long recursiveProductApp(long m, long n) {
         // --- Optimization Step ---
@@ -93,4 +94,48 @@ public class RecursiveProductApp {
         // return 4 + (4 + 4)
         return m + recursiveProductApp(m, n - 1);
     }
+
+    /**
+     * Reads a positive long integer from the user with validation.
+     * Users can type invalid input (letters, decimals, negative numbers, or empty values).
+     * This helper method keeps prompting until the user enters a valid positive integer
+     *
+     * Validation rules:
+     *  - Input must be a number that fits in a Java long
+     *  - Input must be > 0 (strictly positive)
+     *
+     * @param sc        Scanner used to read input from the console
+     * @param prompt    message displayed to the user before reading input
+     * @return          a valid positive long (> 0)
+     */
+    private static long readPositiveLong(Scanner sc, String prompt) {
+        // Repeat forever until we return a valid value
+        while (true) {
+            // Show prompt so user knows what to input
+            System.out.print(prompt);
+
+            // Read the entire line the user typed and remove leading or trailing spaces
+            String token = sc.nextLine().trim();
+
+            try {
+                //  Attempt to convert the string to a long integer
+                long value = Long.parseLong(token);
+
+                // Check positivity requirement: must > 0
+                if (value <= 0) {
+                    // If not positive, then print a friendly message and loop again
+                    System.out.println("Please enter a positive integer (> 0)");
+                }else {
+                    // Valid number and positive -> return a caller
+                    return value;
+                }
+            }catch (NumberFormatException e) {
+                // This happens if the user types something that cannot be parsed as a long
+                // e.g. "abc", "12.5", "", "1,0000"
+                System.out.println("Invalid number! Try again...");
+            }
+        }
+    }
+
+
 }
