@@ -14,7 +14,6 @@
 
 package exercise1;
 
-
 import java.util.Scanner;
 
 /**
@@ -137,5 +136,28 @@ public class RecursiveProductApp {
         }
     }
 
+    //  Program entry point
+    public static void main(String[] args) {
+        // Create a scanner to read from standard input (keyboard)
+        Scanner sc = new Scanner(System.in);
 
+        // Print a title line so the user knows what program is running
+        System.out.println("=== Exercise 1: Recursive Product (addition/subtraction only) ===");
+
+        // Ask user for first positive integer m (validated)
+        long m = readPositiveLong(sc, "Enter m (positive integer): ");
+
+        // Ask user for second positive integer n (validated)
+        long n = readPositiveLong(sc, "Enter n (positive integer): ");
+
+        // Compute the product using recursion (no multiplication operator used)
+        long result = recursiveProductApp(m, n);
+
+        // Print output in a friendly format
+        System.out.println("\nResult:");
+        System.out.println(m + " × " + n + " = " + result);
+
+        // Close Scanner
+        sc.close();
+    }
 }
